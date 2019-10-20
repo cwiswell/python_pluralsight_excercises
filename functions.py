@@ -13,8 +13,14 @@ def print_students_titlecase():
     print(students_titlecase)
 
 
-def add_student(name):
-    students.append(name)
+def add_student(name, student_id=332):
+    student = {"name": name, "student_id": student_id}
+    students.append(student)
 
 
-print_students_titlecase()
+def var_args(name, **kwargs):
+    print(name)
+    print(kwargs["description"], kwargs["feedback"])
+
+
+var_args("Mark", description="Love Python", feedback=None)
