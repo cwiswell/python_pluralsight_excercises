@@ -2,9 +2,10 @@ class Student:
 
     school_name = "Georgia Institute of Technology"
 
-    def __init__(self, name, student_id=42):
+    def __init__(self, name, last_name, student_id=42):
         self.name = name
         self.student_id = student_id
+        self.last_name = last_name
 
     def __str__(self):
         return f"Student {self.name}"
