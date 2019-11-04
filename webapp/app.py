@@ -14,6 +14,17 @@ def students_page():
 
 @app.route("/", methods=["POST"])
 def add_student():
+    """
+    Processes the post request for adding a student
+
+    args:
+        student-id: Students id
+        name: students first name
+        last-name: students last name
+
+    return:
+        redirects to students_page
+    """
     process_add_request(request.form)
 
     return redirect(url_for("students_page"))
