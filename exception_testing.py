@@ -1,14 +1,14 @@
 """ test exceptions. """
+import sys
 
 
 def convert(s):
     """ Convert to an integer."""
-    x = -1
     try:
-        x = int(s)
-    except (ValueError, TypeError):
-        pass
-    return x
+        return int(s)
+    except (ValueError, TypeError) as e:
+        print(f"Conversion error: {str(e)}", file=sys.stderr)
+        return -1
 
 
 convert("33")
