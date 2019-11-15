@@ -3,15 +3,17 @@
 
 def convert(s):
     """ Convert to an integer."""
+    x = -1
     try:
         x = int(s)
         print(f"Conversion succeeded! x = {x}")
-    except ValueError:
+    except (ValueError, TypeError):
         print("Conversion failed!")
-        x = -1
     return x
 
 
 convert("33")
 
 convert("test")
+
+convert([1,2])
