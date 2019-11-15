@@ -6,9 +6,8 @@ def convert(s):
     x = -1
     try:
         x = int(s)
-        print(f"Conversion succeeded! x = {x}")
     except (ValueError, TypeError):
-        print("Conversion failed!")
+        pass
     return x
 
 
@@ -16,4 +15,4 @@ convert("33")
 
 convert("test")
 
-convert([1,2])
+convert([1, 2])
