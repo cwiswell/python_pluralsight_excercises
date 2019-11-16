@@ -8,7 +8,7 @@ def convert(s):
         return int(s)
     except (ValueError, TypeError) as e:
         print(f"Conversion error: {str(e)}", file=sys.stderr)
-        return -1
+        raise
 
 
 convert("33")
