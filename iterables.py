@@ -30,3 +30,20 @@ print(next(iterator))
 
 print(next(iterator))
 
+
+"""Block to test generators"""
+
+
+def gen123():
+    yield 1
+    yield 2
+    yield 3
+
+
+gen = gen123()
+print(next(gen))
+print(next(gen))
+print(next(gen))
+
+for g in gen123():
+    print(g)
