@@ -101,7 +101,7 @@ class Trip:
 
     def make_boarding_cards(self, card_printer):
         for passenger, seat in sorted(self._passenger_seats()):
-            card_printer(passenger, seat, self.number(), self.train_model)
+            card_printer(passenger, seat, self.number(), self.train_model())
 
     def _passenger_seats(self):
         """An iterable series of passenger seating allocations."""
@@ -165,4 +165,6 @@ t = make_trip()
 t.print_seating()
 t.relocate_passenger('13F', '1A')
 t.print_seating()
-print(t.num_available_seats())
+
+t.make_boarding_cards(console_card_printer)
+
