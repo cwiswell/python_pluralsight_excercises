@@ -99,6 +99,19 @@ class Trip:
                    for row in self._seating
                    if row is not None)
 
+    def make_boarding_cards(self, card_printer):
+        for passenger, seat in sorted(self._passenger_seats()):
+            card_printer(passenger, seat, self.number(), self.train_model)
+
+    def _passenger_seats(self):
+        """An iterable series of passenger seating allocations."""
+        row_numbers, seat_letters = self._train.seating_plan()
+        for row in row_numbers:
+            for letter in seat_letters:
+                passenger = self._seating[row][letter]
+                if passenger is not None:
+                    yield passenger, f"{row}{letter}"
+
 
 class Train:
 
@@ -133,6 +146,19 @@ def make_trip():
     some_trip.allocate_seat("5C", "Mel Gibbs")
     some_trip.allocate_seat("1D", "Richard Richardson")
     return some_trip
+
+
+def console_card_printer(passenger, seat, train_number, train):
+    output = f"| Name: {passenger}" \
+             f"  Trip: {train_number}" \
+             f"  Seat: {seat}" \
+             f"  Train: {train}"
+    banner = '+' + '-' * (len(output) - 2) + '+'
+    border = '|' + ' ' * (len(output) - 2) + '|'
+    lines = [banner, border, output, border, banner]
+    card = '\n'.join(lines)
+    print(card)
+    print()
 
 
 t = make_trip()
