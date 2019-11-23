@@ -76,6 +76,24 @@ class Trip:
 
         self._seating[row][letter] = passenger
 
+    def relocate_passenger(self, from_seat, to_seat):
+        """Relocate a passenger to a different seat.
+
+        Args:
+            from_seat: The existing seat designator for the passenger to be moved.
+            to_seat: The new seat designator.
+        """
+        from_row, from_letter = self._parse_set(from_seat)
+        if self._seating[from_row][from_letter] is None:
+            raise ValueError(f"No passenger to relocate in {from_seat}")
+
+        to_row, to_letter = self._parse_set(to_seat)
+        if self._seating[to_row][to_letter] is not None:
+            raise ValueError(f"Seat {from_seat} is already occupied")
+
+        self._seating[to_row][to_letter] = self._seating[from_row][from_letter]
+        self._seating[from_row][from_letter] = None
+
 
 class Train:
 
@@ -102,8 +120,17 @@ class Train:
         return range(1, self._num_rows + 1), "ABCDEFGHJK"[:self._num_seats_per_row]
 
 
-some_trip = Trip("BA9911", Train("G-PPT", "Some Train", num_rows=10, num_seats_per_row=5))
-t = Train("G-PPT", "Some Train", num_rows=10, num_seats_per_row=5)
+def make_trip():
+    some_trip = Trip("BA9911", Train("G-PPT", "Some Train", num_rows=15, num_seats_per_row=6))
+    some_trip.allocate_seat("6A", "Bob Ross")
+    some_trip.allocate_seat("13F", "Timothy Toddle")
+    some_trip.allocate_seat("1B", "Some Dude")
+    some_trip.allocate_seat("5C", "Mel Gibbs")
+    some_trip.allocate_seat("1D", "Richard Richardson")
+    return some_trip
 
-pp(some_trip.train_model())
-some_trip.print_seating()
+
+t = make_trip()
+t.print_seating()
+t.relocate_passenger('13F', '1A')
+t.print_seating()
