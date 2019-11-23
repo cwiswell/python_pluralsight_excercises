@@ -33,15 +33,14 @@ class Trip:
     def print_seating(self):
         pp(self._seating)
 
-    def allocate_seat(self, seat, passenger):
-        """Allocate a seat to a passenger
+    def _parse_set(self, seat):
+        """Parse a seat designator into a valid row and letter
 
         Args:
-            seat: A seat designator such as '12C' or '21F'.
-            passenger: The passenger name
+            seat: A seat designator such as '12F'
 
-        Raises:
-             ValueError: If the seat is unavailable
+        Returns:
+            A tuple containing an integer and a string for row and seat.
         """
         rows, seat_letters = self._train.seating_plan()
 
@@ -57,6 +56,20 @@ class Trip:
 
         if row not in rows:
             raise ValueError(f"Invalid row number {row}")
+
+        return row, letter
+
+    def allocate_seat(self, seat, passenger):
+        """Allocate a seat to a passenger
+
+        Args:
+            seat: A seat designator such as '12C' or '21F'.
+            passenger: The passenger name
+
+        Raises:
+             ValueError: If the seat is unavailable
+        """
+        row, letter = self._parse_set(seat)
 
         if self._seating[row][letter] is not None:
             raise ValueError(f"Seat {seat} already occupied")
