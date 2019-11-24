@@ -113,6 +113,38 @@ class Trip:
                     yield passenger, f"{row}{letter}"
 
 
+class TrainTypeA:
+
+    def __init__(self,registration):
+        self._registration = registration
+
+    def registration(self):
+        return self._registration
+
+    def model(self):
+        return "Some Train A"
+
+    def seating_plan(self):
+        return range(1, 23), "ABCDEF"
+
+
+class TrainTypeB:
+
+    def __init__(self, registration):
+        self._registration = registration
+
+    def registration(self):
+        return self._registration
+
+    def model(self):
+         return "Some Train b"
+
+    def seating_plan(self):
+         return range(1, 56), "ABCDEGHJK"
+
+
+
+
 class Train:
 
     def __init__(self, registration, model, num_rows, num_seats_per_row):
@@ -146,6 +178,20 @@ def make_trip():
     some_trip.allocate_seat("5C", "Mel Gibbs")
     some_trip.allocate_seat("1D", "Richard Richardson")
     return some_trip
+
+
+def make_trips():
+    t1 = Trip("BA7901", TrainTypeA("G-EUPT"))
+    t1.allocate_seat("6A", "Bob Ross")
+    t1.allocate_seat("13F", "Timothy Toddle")
+    t1.allocate_seat("1B", "Some Dude")
+    t1.allocate_seat("5C", "Mel Gibbs")
+    t1.allocate_seat("1D", "Richard Richardson")
+
+    t2 = Trip("AK100", TrainTypeB("F-PBL"))
+    t2.allocate_seat("1B", "Some Guy")
+    t2.allocate_seat("1C", "Mel Gus")
+    t2.allocate_seat("1D", "Link Richards")
 
 
 def console_card_printer(passenger, seat, train_number, train):
