@@ -113,7 +113,14 @@ class Trip:
                     yield passenger, f"{row}{letter}"
 
 
-class TrainTypeA:
+class Train:
+
+    def num_seats(self):
+        rows, row_seats = self.seating_plan()
+        return len(rows) * len(row_seats)
+
+
+class TrainTypeA(Train):
 
     def __init__(self,registration):
         self._registration = registration
@@ -128,7 +135,7 @@ class TrainTypeA:
         return range(1, 23), "ABCDEF"
 
 
-class TrainTypeB:
+class TrainTypeB(Train):
 
     def __init__(self, registration):
         self._registration = registration
@@ -141,43 +148,6 @@ class TrainTypeB:
 
     def seating_plan(self):
          return range(1, 56), "ABCDEGHJK"
-
-
-
-
-class Train:
-
-    def __init__(self, registration, model, num_rows, num_seats_per_row):
-        self._registration = registration
-        self._model = model
-
-        if num_rows < 1:
-            raise ValueError(f"Invalid number of rows {num_rows}")
-
-        if num_seats_per_row < 1:
-            raise ValueError(f"Invalid number of seats per row {num_seats_per_row}")
-
-        self._num_rows = num_rows
-        self._num_seats_per_row = num_seats_per_row
-
-    def registration(self):
-        return self._registration
-
-    def model(self):
-        return self._model
-
-    def seating_plan(self):
-        return range(1, self._num_rows + 1), "ABCDEFGHJK"[:self._num_seats_per_row]
-
-
-def make_trip():
-    some_trip = Trip("BA9911", Train("G-PPT", "Some Train", num_rows=15, num_seats_per_row=6))
-    some_trip.allocate_seat("6A", "Bob Ross")
-    some_trip.allocate_seat("13F", "Timothy Toddle")
-    some_trip.allocate_seat("1B", "Some Dude")
-    some_trip.allocate_seat("5C", "Mel Gibbs")
-    some_trip.allocate_seat("1D", "Richard Richardson")
-    return some_trip
 
 
 def make_trips():
@@ -207,10 +177,5 @@ def console_card_printer(passenger, seat, train_number, train):
     print()
 
 
-t = make_trip()
-t.print_seating()
-t.relocate_passenger('13F', '1A')
-t.print_seating()
 
-t.make_boarding_cards(console_card_printer)
 
